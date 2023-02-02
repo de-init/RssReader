@@ -5,4 +5,5 @@ struct Feed {
     var title: String = ""
     var date: String = ""
     var description: String = ""
+    var image: String = ""
 }

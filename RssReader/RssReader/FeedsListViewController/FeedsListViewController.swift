@@ -3,7 +3,7 @@ import UIKit
 class FeedsListViewController: UIViewController {
     
     //MARK: - Properties
-    let navTitle: UILabel = {
+    private let navTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.boldSystemFont(ofSize: 35)
@@ -18,12 +18,19 @@ class FeedsListViewController: UIViewController {
     
     private var tableView = UITableView()
     private let parser = LentaParser()
+    private var feedsList: [Feed] = []
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupUI()
+        updateData()
+    }
+    
+    private func updateData() {
+        guard let link = URL(string: rssLink) else { return }
+        feedsList = parser.parse(url: link)
     }
     
     //MARK: - viewWillLayoutSubviews
@@ -41,7 +48,7 @@ class FeedsListViewController: UIViewController {
     }
     
     //MARK: - setupUI
-    func setupUI() {
+    private func setupUI() {
         view.backgroundColor = UIColor(hex: 0x344E41)
         self.navigationController?.navigationBar.isHidden = true
         navBar.translatesAutoresizingMaskIntoConstraints = false
@@ -71,6 +78,7 @@ extension FeedsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
 }
 
@@ -78,6 +86,8 @@ extension FeedsListViewController: UITableViewDelegate {
 extension FeedsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.reuseID, for: indexPath) as? FeedTableViewCell else { return UITableViewCell() }
+        let feedItem = feedsList[indexPath.row]
+        cell.configure(imageData: feedItem.image, titleText: feedItem.title, dateText: feedItem.date, authorText: feedItem.author)
         return cell
     }
 }

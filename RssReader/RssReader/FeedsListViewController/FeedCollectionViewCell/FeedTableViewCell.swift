@@ -11,6 +11,8 @@ class FeedTableViewCell: UITableViewCell {
         imageView.image = UIImage(named: "test")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = .gray
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 5
         return imageView
     }()
     
@@ -75,8 +77,9 @@ class FeedTableViewCell: UITableViewCell {
     }
     
     //MARK: - Configure method
-    func configure(imageData: Data, titleText: String, dateText: String, authorText: String) {
-        self.feedImageView.image = UIImage(data: imageData)
+    func configure(imageData: String, titleText: String, dateText: String, authorText: String) {
+        guard let url = URL(string: imageData), let data = NSData(contentsOf: url) else { return }
+        self.feedImageView.image = UIImage(data: data as Data)
         self.feedTitle.text = titleText
         self.feedDate.text = dateText
         self.feedAuthor.text = authorText

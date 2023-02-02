@@ -1,6 +1,6 @@
 import UIKit
 
-class LentaParser: NSObject {
+final class LentaParser: NSObject {
     var xmlParser: XMLParser?
     var feeds: [Feed] = []
     var xmlText = ""
@@ -17,23 +17,26 @@ class LentaParser: NSObject {
 extension LentaParser: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
         xmlText = ""
-        
         if elementName == "item" {
             currentFeed = Feed()
+        } else if (elementName as NSString).isEqual(to: "enclosure") {
+            if let urlString = attributeDict["url"] {
+                currentFeed?.image = urlString
+            }
         }
     }
     
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName == "author" {
+        if elementName == FeedBlockName.author.rawValue {
             currentFeed?.author = xmlText.trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        if elementName == "title" {
+        if elementName == FeedBlockName.title.rawValue {
             currentFeed?.title = xmlText.trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        if elementName == "description" {
+        if elementName == FeedBlockName.description.rawValue {
             currentFeed?.description = xmlText.trimmingCharacters(in: .whitespacesAndNewlines)
         }
-        if elementName == "pubDate" {
+        if elementName == FeedBlockName.pubDate.rawValue {
             currentFeed?.date = xmlText.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         if elementName == "item" {

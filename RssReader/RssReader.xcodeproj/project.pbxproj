@@ -10,6 +10,7 @@
 		9199BACA298ABB3C0031F529 /* Public Properties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9199BAC9298ABB3C0031F529 /* Public Properties.swift */; };
 		9199BACD298BA3C40031F529 /* CustomNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9199BACC298BA3C40031F529 /* CustomNavigationBar.swift */; };
 		9199BAD0298BA48E0031F529 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9199BACF298BA48E0031F529 /* Enums.swift */; };
+		9199BAD6298BFD940031F529 /* ReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9199BAD5298BFD940031F529 /* ReaderViewController.swift */; };
 		91B73293298A5349001C3B6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B73292298A5349001C3B6F /* AppDelegate.swift */; };
 		91B73295298A5349001C3B6F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B73294298A5349001C3B6F /* SceneDelegate.swift */; };
 		91B73297298A5349001C3B6F /* FeedsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B73296298A5349001C3B6F /* FeedsListViewController.swift */; };
@@ -25,6 +26,7 @@
 		9199BAC9298ABB3C0031F529 /* Public Properties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Public Properties.swift"; sourceTree = "<group>"; };
 		9199BACC298BA3C40031F529 /* CustomNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationBar.swift; sourceTree = "<group>"; };
 		9199BACF298BA48E0031F529 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		9199BAD5298BFD940031F529 /* ReaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReaderViewController.swift; sourceTree = "<group>"; };
 		91B7328F298A5349001C3B6F /* RssReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RssReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B73292298A5349001C3B6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91B73294298A5349001C3B6F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +69,14 @@
 			path = CustomNavigationBar;
 			sourceTree = "<group>";
 		};
+		9199BAD7298BFE2F0031F529 /* ReaderViewController */ = {
+			isa = PBXGroup;
+			children = (
+				9199BAD5298BFD940031F529 /* ReaderViewController.swift */,
+			);
+			path = ReaderViewController;
+			sourceTree = "<group>";
+		};
 		91B73286298A5349001C3B6F = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +101,7 @@
 				91B732A7298A5598001C3B6F /* Resources */,
 				91B732B2298A7DD1001C3B6F /* ParserManager */,
 				91B732A9298A5642001C3B6F /* FeedsListViewController */,
+				9199BAD7298BFE2F0031F529 /* ReaderViewController */,
 				91B732AA298A5B9E001C3B6F /* Extensions */,
 				9199BAC8298ABB2F0031F529 /* Utilities */,
 			);
@@ -237,6 +248,7 @@
 			files = (
 				91B73297298A5349001C3B6F /* FeedsListViewController.swift in Sources */,
 				91B732B4298A7DE7001C3B6F /* LentaParser.swift in Sources */,
+				9199BAD6298BFD940031F529 /* ReaderViewController.swift in Sources */,
 				9199BAD0298BA48E0031F529 /* Enums.swift in Sources */,
 				91B732AC298A5BC1001C3B6F /* UIColor.swift in Sources */,
 				9199BACD298BA3C40031F529 /* CustomNavigationBar.swift in Sources */,
