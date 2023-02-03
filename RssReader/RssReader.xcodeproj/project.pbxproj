@@ -20,9 +20,8 @@
 		91B732B1298A6058001C3B6F /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B732B0298A6058001C3B6F /* FeedTableViewCell.swift */; };
 		91B732B4298A7DE7001C3B6F /* LentaParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B732B3298A7DE7001C3B6F /* LentaParser.swift */; };
 		91B732B7298A8B4F001C3B6F /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B732B6298A8B4F001C3B6F /* Feed.swift */; };
-		91F15204298C5B82003AA9F0 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F15203298C5B82003AA9F0 /* DateFormatter.swift */; };
+		91F15204298C5B82003AA9F0 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F15203298C5B82003AA9F0 /* String.swift */; };
 		91F15211298D19C0003AA9F0 /* FeedsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F15210298D19C0003AA9F0 /* FeedsViewModel.swift */; };
-		91F15214298D1B47003AA9F0 /* FeedRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F15213298D1B47003AA9F0 /* FeedRealm.swift */; };
 		98FF2EB7D2A7F5D1D85C975E /* Pods_RssReader.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC0668865ADC6D0548EC632C /* Pods_RssReader.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,9 +43,8 @@
 		91B732B0298A6058001C3B6F /* FeedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
 		91B732B3298A7DE7001C3B6F /* LentaParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LentaParser.swift; sourceTree = "<group>"; };
 		91B732B6298A8B4F001C3B6F /* Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
-		91F15203298C5B82003AA9F0 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
+		91F15203298C5B82003AA9F0 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		91F15210298D19C0003AA9F0 /* FeedsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedsViewModel.swift; sourceTree = "<group>"; };
-		91F15213298D1B47003AA9F0 /* FeedRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRealm.swift; sourceTree = "<group>"; };
 		AC0668865ADC6D0548EC632C /* Pods_RssReader.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RssReader.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -130,7 +128,6 @@
 				91B732A8298A55AD001C3B6F /* LauchScreen */,
 				91B732A7298A5598001C3B6F /* Resources */,
 				91B732B2298A7DD1001C3B6F /* ParserManager */,
-				91F15212298D1B38003AA9F0 /* Realm */,
 				91B732A9298A5642001C3B6F /* FeedsListViewController */,
 				9199BAD7298BFE2F0031F529 /* ReaderViewController */,
 				91B732AA298A5B9E001C3B6F /* Extensions */,
@@ -179,7 +176,7 @@
 			isa = PBXGroup;
 			children = (
 				91B732AB298A5BC1001C3B6F /* UIColor.swift */,
-				91F15203298C5B82003AA9F0 /* DateFormatter.swift */,
+				91F15203298C5B82003AA9F0 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -207,14 +204,6 @@
 				91B732B6298A8B4F001C3B6F /* Feed.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		91F15212298D1B38003AA9F0 /* Realm */ = {
-			isa = PBXGroup;
-			children = (
-				91F15213298D1B47003AA9F0 /* FeedRealm.swift */,
-			);
-			path = Realm;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,8 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91F15204298C5B82003AA9F0 /* DateFormatter.swift in Sources */,
-				91F15214298D1B47003AA9F0 /* FeedRealm.swift in Sources */,
+				91F15204298C5B82003AA9F0 /* String.swift in Sources */,
 				91B73297298A5349001C3B6F /* FeedsListViewController.swift in Sources */,
 				91F15211298D19C0003AA9F0 /* FeedsViewModel.swift in Sources */,
 				91B732B4298A7DE7001C3B6F /* LentaParser.swift in Sources */,

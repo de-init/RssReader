@@ -1,5 +1,4 @@
 import UIKit
-import RealmSwift
 
 class FeedTableViewCell: UITableViewCell {
     
@@ -90,12 +89,12 @@ class FeedTableViewCell: UITableViewCell {
     }
     
     //MARK: - Configure method
-    func configure(model: FeedModel) {
-        guard let url = URL(string: model.feedImage), let data = NSData(contentsOf: url) else { return }
+    func configure(model: Feed) {
+        guard let url = URL(string: model.image), let data = NSData(contentsOf: url) else { return }
         self.feedImageView.image = UIImage(data: data as Data)
-        self.feedTitle.text = model.feedTitle
-        self.feedDate.text = model.feedDate
-        self.feedAuthor.text = model.feedAuthor
+        self.feedTitle.text = model.title
+        self.feedDate.text = model.date
+        self.feedAuthor.text = model.author
     }
     
     //MARK: - layoutSubviews

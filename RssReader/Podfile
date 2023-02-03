@@ -6,6 +6,5 @@ target 'RssReader' do
   use_frameworks!
 
   # Pods for RssReader
-	pod 'RealmSwift', '~>10'
 
 end

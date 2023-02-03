@@ -37,7 +37,8 @@ extension LentaParser: XMLParserDelegate {
             currentFeed?.description = xmlText.trimmingCharacters(in: .whitespacesAndNewlines)
         }
         if elementName == FeedBlockName.pubDate.rawValue {
-            currentFeed?.date = xmlText.trimmingCharacters(in: .whitespacesAndNewlines)
+            let text = xmlText.trimmingCharacters(in: .whitespacesAndNewlines).formated(from: "E, dd MMM yyyy HH:mm:ss Z", to: "hh:mm dd.MM.YYYY")
+            currentFeed?.date = text
         }
         if elementName == "item" {
             if let feed = currentFeed {

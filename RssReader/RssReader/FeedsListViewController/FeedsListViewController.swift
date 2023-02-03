@@ -1,5 +1,4 @@
 import UIKit
-import RealmSwift
 
 class FeedsListViewController: UIViewController {
     
@@ -25,7 +24,7 @@ class FeedsListViewController: UIViewController {
     }()
     
     private var tableView = UITableView()
-    private var feedsList: Results<FeedModel>!
+    private var feedsList: [Feed] = []
     private var viewModel = FeedsViewModel()
     
     //MARK: - viewDidLoad
@@ -45,9 +44,7 @@ class FeedsListViewController: UIViewController {
     private func loadingFeeds() {
         guard let link = URL(string: rssLink) else { return }
         let data = viewModel.fetchData(with: link)
-        let savedData = viewModel.saveData(model: data)
-        feedsList = viewModel.loadData()
-        
+        feedsList = data
     }
     
     //MARK: - viewWillLayoutSubviews
@@ -103,7 +100,7 @@ extension FeedsListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let itemData = feedsList[indexPath.row]
-        let vc = ReaderViewController(getImage: itemData.feedImage, getTitle: itemData.feedTitle, getDescription: itemData.feedDescription, getDate: itemData.feedDate, getAuthor: itemData.feedAuthor)
+        let vc = ReaderViewController(getImage: itemData.image, getTitle: itemData.title, getDescription: itemData.description, getDate: itemData.date, getAuthor: itemData.author)
         navigationController?.pushViewController(vc, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
