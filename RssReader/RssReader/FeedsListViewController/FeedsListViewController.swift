@@ -1,4 +1,5 @@
 import UIKit
+import RealmSwift
 
 class FeedsListViewController: UIViewController {
     
@@ -12,25 +13,41 @@ class FeedsListViewController: UIViewController {
         return label
     }()
     
+    private lazy var refreshControl: UIRefreshControl = {
+        let refresh = UIRefreshControl()
+        refresh.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refresh.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+        return refresh
+    }()
+    
     private lazy var navBar: CustomNavigationBar = {
         return CustomNavigationBar(animatingView: self.navTitle, animationStyle: .leftToCenter)
     }()
     
     private var tableView = UITableView()
-    private let parser = LentaParser()
-    private var feedsList: [Feed] = []
+    private var feedsList: Results<FeedModel>!
+    private var viewModel = FeedsViewModel()
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
         setupUI()
-        updateData()
+        loadingFeeds()
     }
     
-    private func updateData() {
+    //MARK: - viewWillAppear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    
+    private func loadingFeeds() {
         guard let link = URL(string: rssLink) else { return }
-        feedsList = parser.parse(url: link)
+        let data = viewModel.fetchData(with: link)
+        let savedData = viewModel.saveData(model: data)
+        feedsList = viewModel.loadData()
+        
     }
     
     //MARK: - viewWillLayoutSubviews
@@ -50,7 +67,6 @@ class FeedsListViewController: UIViewController {
     //MARK: - setupUI
     private func setupUI() {
         view.backgroundColor = UIColor(hex: 0x344E41)
-        self.navigationController?.navigationBar.isHidden = true
         navBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(navTitle)
         view.addSubview(navBar)
@@ -64,6 +80,14 @@ class FeedsListViewController: UIViewController {
         tableView.dataSource = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.showsVerticalScrollIndicator = false
+        tableView.addSubview(refreshControl)
+    }
+    
+    @objc func pullToRefresh() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, qos: .background, execute: {
+            self.loadingFeeds()
+            self.refreshControl.endRefreshing()
+        })
     }
 }
 
@@ -74,11 +98,14 @@ extension FeedsListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return feedsList.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        let itemData = feedsList[indexPath.row]
+        let vc = ReaderViewController(getImage: itemData.feedImage, getTitle: itemData.feedTitle, getDescription: itemData.feedDescription, getDate: itemData.feedDate, getAuthor: itemData.feedAuthor)
+        navigationController?.pushViewController(vc, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -86,8 +113,10 @@ extension FeedsListViewController: UITableViewDelegate {
 extension FeedsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.reuseID, for: indexPath) as? FeedTableViewCell else { return UITableViewCell() }
-        let feedItem = feedsList[indexPath.row]
-        cell.configure(imageData: feedItem.image, titleText: feedItem.title, dateText: feedItem.date, authorText: feedItem.author)
+        let item = feedsList[indexPath.row]
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, qos: .default) {
+            cell.configure(model: item)
+        }
         return cell
     }
 }

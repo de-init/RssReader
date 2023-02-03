@@ -2,17 +2,34 @@ import UIKit
 
 class ReaderViewController: UIViewController {
     //MARK: - Properties
+    private lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.backgroundColor = .white
+        scroll.frame = view.bounds
+        scroll.contentSize = contentSize
+        return scroll
+    }()
+    
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.frame.size = contentSize
+        return view
+    }()
+
     private var feedImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleToFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
         return imageView
     }()
     
     private var feedTitle: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 34, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         label.textAlignment = .left
         label.numberOfLines = 0
@@ -22,17 +39,19 @@ class ReaderViewController: UIViewController {
     private var feedDescription: UITextView = {
         let text = UITextView()
         text.translatesAutoresizingMaskIntoConstraints = false
-        text.font = UIFont.systemFont(ofSize: 25, weight: .regular)
+        text.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         text.textColor = .black.withAlphaComponent(0.8)
-        text.textAlignment = .natural
+        text.textAlignment = .left
+        text.backgroundColor = .clear
         text.isEditable = false
+        text.isScrollEnabled = false
         return text
     }()
     
     private var feedDate: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 22, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = .gray
         label.textAlignment = .left
         label.numberOfLines = 0
@@ -42,12 +61,20 @@ class ReaderViewController: UIViewController {
     private var feedAuthor: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 22, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = .gray
         label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
+    
+    private var sizeTextView: CGFloat {
+        return CGFloat(feedDescription.frame.height)
+    }
+    
+    private var contentSize: CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height - 100)
+    }
     
     //MARK: - Senders Properties
     private var getImage: String
@@ -65,7 +92,6 @@ class ReaderViewController: UIViewController {
         self.getAuthor = getAuthor
         
         super.init(nibName: nil, bundle: nil)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -75,12 +101,13 @@ class ReaderViewController: UIViewController {
     //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
         setupUI()
+        setupNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
         getFeed()
     }
     
@@ -90,45 +117,60 @@ class ReaderViewController: UIViewController {
         setupConstraints()
     }
     
+    //MARK: - Load Feed Data
     func getFeed() {
+        guard let url = URL(string: getImage), let data = NSData(contentsOf: url) else { return }
+        feedImage.image = UIImage(data: data as Data)
         feedTitle.text = getTitle
         feedDescription.text = getDescription
         feedDate.text = getDate
-        feedAuthor.text = getAuthor
+        feedAuthor.text = "by" + " " + getAuthor
     }
 }
 
 //MARK: - Setup UI and Constraints
 extension ReaderViewController {
     private func setupUI() {
-        view.addSubview(feedImage)
-        view.addSubview(feedTitle)
-        view.addSubview(feedDescription)
-        view.addSubview(feedDate)
-        view.addSubview(feedAuthor)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(feedImage)
+        contentView.addSubview(feedTitle)
+        contentView.addSubview(feedDescription)
+        contentView.addSubview(feedDate)
+        contentView.addSubview(feedAuthor)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            feedImage.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            feedImage.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15),
-            feedImage.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
-            feedImage.heightAnchor.constraint(equalToConstant: 300),
+            feedImage.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
+            feedImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 15),
+            feedImage.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -15),
+            feedImage.heightAnchor.constraint(equalToConstant: 220),
             
             feedTitle.topAnchor.constraint(equalTo: self.feedImage.bottomAnchor, constant: 10),
-            feedTitle.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15),
-            feedTitle.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
+            feedTitle.leadingAnchor.constraint(equalTo: self.feedImage.leadingAnchor),
+            feedTitle.trailingAnchor.constraint(equalTo: self.feedImage.trailingAnchor),
             
-            feedDescription.topAnchor.constraint(equalTo: self.feedTitle.bottomAnchor, constant: 20),
-            feedDescription.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15),
-            feedDescription.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
-            feedDescription.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 10),
+            feedDescription.topAnchor.constraint(equalTo: self.feedTitle.bottomAnchor, constant: 10),
+            feedDescription.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10),
+            feedDescription.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -15),
             
-            feedDate.topAnchor.constraint(equalTo: self.feedDescription.topAnchor, constant: 10),
-            feedDate.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15),
+            feedDate.topAnchor.constraint(equalTo: self.feedDescription.bottomAnchor, constant: 10),
+            feedDate.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 15),
             
-            feedAuthor.topAnchor.constraint(equalTo: self.feedDescription.topAnchor, constant: 10),
+            feedAuthor.topAnchor.constraint(equalTo: self.feedDescription.bottomAnchor, constant: 10),
             feedAuthor.leadingAnchor.constraint(equalTo: self.feedDate.trailingAnchor, constant: 10)
         ])
+    }
+    
+    private func setupNavigationBar() {
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+        navBarAppearance.backgroundColor = UIColor(hex: 0x344E41)
+        
+        self.navigationItem.title = "Новость"
+        
+        self.navigationController?.navigationBar.standardAppearance = navBarAppearance
+        self.navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
 }

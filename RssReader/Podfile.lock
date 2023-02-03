@@ -1,0 +1,26 @@
+PODS:
+  - lottie-ios (4.0.1)
+  - Realm (10.34.1):
+    - Realm/Headers (= 10.34.1)
+  - Realm/Headers (10.34.1)
+  - RealmSwift (10.34.1):
+    - Realm (= 10.34.1)
+
+DEPENDENCIES:
+  - lottie-ios
+  - RealmSwift (~> 10)
+
+SPEC REPOS:
+  trunk:
+    - lottie-ios
+    - Realm
+    - RealmSwift
+
+SPEC CHECKSUMS:
+  lottie-ios: 54d22edf55b839f0929cabbfe609c9aa548b1145
+  Realm: fe824cd5b183cd55a50a6bcb4bce3ac1650e60b6
+  RealmSwift: c7f668f82982fc8b62366b78b8dc761f15141df6
+
+PODFILE CHECKSUM: ee5646e9acf4013396fb2167b224a340bca913ab
+
+COCOAPODS: 1.11.3

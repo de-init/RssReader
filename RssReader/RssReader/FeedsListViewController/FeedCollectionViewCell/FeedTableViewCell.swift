@@ -1,4 +1,5 @@
 import UIKit
+import RealmSwift
 
 class FeedTableViewCell: UITableViewCell {
     
@@ -64,8 +65,20 @@ class FeedTableViewCell: UITableViewCell {
         setupUI()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        reset()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func reset() {
+        self.feedDate.text = nil
+        self.feedTitle.text = nil
+        self.feedAuthor.text = nil
+        self.feedImageView.image = nil
     }
     
     //MARK: - Setup UI
@@ -77,12 +90,12 @@ class FeedTableViewCell: UITableViewCell {
     }
     
     //MARK: - Configure method
-    func configure(imageData: String, titleText: String, dateText: String, authorText: String) {
-        guard let url = URL(string: imageData), let data = NSData(contentsOf: url) else { return }
+    func configure(model: FeedModel) {
+        guard let url = URL(string: model.feedImage), let data = NSData(contentsOf: url) else { return }
         self.feedImageView.image = UIImage(data: data as Data)
-        self.feedTitle.text = titleText
-        self.feedDate.text = dateText
-        self.feedAuthor.text = authorText
+        self.feedTitle.text = model.feedTitle
+        self.feedDate.text = model.feedDate
+        self.feedAuthor.text = model.feedAuthor
     }
     
     //MARK: - layoutSubviews

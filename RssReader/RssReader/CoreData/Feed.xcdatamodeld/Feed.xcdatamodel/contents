@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22D49" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FeedModel" representedClassName="FeedModel" syncable="YES" codeGenerationType="class">
+        <attribute name="feedAuthor" optional="YES" attributeType="String"/>
+        <attribute name="feedDate" optional="YES" attributeType="String"/>
+        <attribute name="feedDescription" optional="YES" attributeType="String"/>
+        <attribute name="feedImage" optional="YES" attributeType="String"/>
+        <attribute name="feedTitle" optional="YES" attributeType="String"/>
+    </entity>
+</model>
